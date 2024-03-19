@@ -1,0 +1,11 @@
+
+div.disk
+{
+   background-color:grey;
+   background-image:radial-gradient(purple,white,green,orange);
+   background-repeat:repeat;
+   border:2px blue dashed;
+   color:purple;
+   height:300px;
+   width:300px
+}
