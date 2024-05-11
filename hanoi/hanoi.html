@@ -1,0 +1,115 @@
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+           .cls1{color:purple;}
+           .layer{position:absolute;
+           background-color:orange;
+           border-radius:5px;
+           }  
+           </style>
+	   <style id=dynamic>
+           @keyframes diskmove
+           {
+               0%{left: 100px;top:100px}
+	       10%  {left: 100px; top: 100px}
+	       66.6%  {left: P; top: 0px}
+               100%{left: 400px;top:500px}
+           }
+        </style>
+    <style>  
+        .column { 
+	    top:100px; 
+            width: 9px;  
+            height: 480px;  
+            background-color: green;  
+            margin: 10px;  
+            position: absolute;  
+            cursor: ew-resize; /* 提示用户可以左右拖动 */  
+            user-select: none; /* 禁止文本选择 */  
+        }  
+    </style>
+    </head>
+<body>
+    <div>  
+        <div class="column" id="column1" style="left: 105px;"></div>  
+        <div class="column" id="column2" style="left: 584px;"></div>  
+        <div class="column" id="column3" style="left: 1112px;"></div>  
+    </div> 
+<tr>
+	<td>Number of Disks to Play</td>
+	<td><select name="number"><option value="8">8</option><option value="7">7</option><option value="6">6</option><option value="5">5</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></td>
+</tr>
+<input id=startbtn type=button onclick=startgame() class=button1 value=Start>
+<input id=pausebtn type=button onclick=pausegame() class=button1 value=Pause>
+<input id=resumebtn type=button onclick=resumegame() class=button1 value=Resume>
+<tr>
+	<td>Period Time</td>
+	<td><select name="number"><option value="8">8s</option><option value="7">7s</option><option value="6">6s</option><option value="5">5s</option><option value="4">4s</option><option value="3">3s</option><option value="2">2s</option><option value="1">1s</option></select></td>
+</tr>
+
+<script>
+let s = document.getElementByld('numdisks');
+for (let n=0; n< 10; n++)
+    s.options[n] = new Option(3+n,3+n);
+
+s = document.getElementByld('period');
+for (let n=0; n<5; n++)
+    s.option[n] = new Option(0.5*(n+1),0.5*(n+1));
+
+var handle;
+var orderOflnstruction = 0;
+function startgame()
+{
+    let s = document.getElementByld('numdisks');
+    N = s.options[s.selectedindex].value;
+    tower(N);
+    move();
+    movedisk(0);
+}    
+
+function pausegame()
+{
+    clearTimeout(handle);
+}
+
+function resumegame()
+{
+    movedisk(orderOflnstruction);
+}
+function showhint(hint,btnvalue)
+{
+    let dv = document.createElement('div');
+    dv.id=btnvalue;
+    dv.style.cssText = 'position:absolute;left:200px;top:300px;background-color:yellow;color:purple;border-radius:4px;box-shadow:2px 2px#676786';
+    dv.innerHTML = hint;
+    document.body.appendChild(dv);
+}
+
+function hidehint(btnvalue)
+{
+    let dv = document.createElement(btnvalue);
+    dv.parentNode.removeChild(dv);
+}
+let time;
+window.onblur = function(){time = (new Date()).getTime();console.log(time);}
+window.onfocus = function()
+{
+     let time1 = (new Date()).getTime(); 
+     let diff = time1 - time;
+     showhint('You have left for' + diff +'milliseconds','time');
+     setTimeout("hidehint('time')",2000);
+}
+  
+</script>
+<script src="Drag.js"></script>        
+<script src="hanoi.js"></script>
+<!--div>
+<div style="background-color:orange;width:200px;height:60px;border-radius:100px/30px;z-index:1"></div>
+<div style="position:relative;top:-30px;background-color:orange;width:200px;height:20px;z-index:2"></div>
+<div style="position:relative;top:-60px;background-color:yellow;width:200px;height:60px;border-radius:100px/30px;border:1px red solid;z-index:3"></div>
+</div-->
+</body>
+</html>
